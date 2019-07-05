@@ -62,12 +62,34 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition: all 0.05s;
     }
 
   </style>
 
   <script>
+    function moveHands() {
+      const now = new Date();
+      
+      const sec = document.querySelector('.second-hand');
+      const min = document.querySelector('.min-hand');
+      const hour = document.querySelector('.hour-hand');
+      
+      // convert current times into degree translations
+      const secDegrees = (now.getSeconds() * (360/60) + 90) % 360;
+      const minDegrees = (now.getMinutes() * (360/60) + 90) % 360;
+      const hourDegrees = (now.getHours() * (360/12) + 90) % 360;
 
+      sec.setAttribute('style', `transform: rotate(${secDegrees}deg);`)
+      min.setAttribute('style', `transform: rotate(${minDegrees}deg);`)
+      hour.setAttribute('style', `transform: rotate(${hourDegrees}deg);`)
+
+      console.log(`hour: ${now.getHours()}[${hourDegrees}] minute: ${now.getMinutes()}[${minDegrees}] second: ${now.getSeconds()}[${secDegrees}]`);
+    }
+
+    window.setInterval(moveHands, 1000);
 
   </script>
 </body>
